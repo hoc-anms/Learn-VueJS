@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Lession 1</title>
+    <script src="vue.js"></script>
+    <style>
+        .vuong{
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: inline-block;
+            margin: 10px;
+        }
+        .do{
+            background-color: red;
+        }
+        .xanhduong{
+            background-color: blue;
+        }
+        .xanhcay{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div v-on:mousemove="tinhToaDo">
+        <p v-html="testCodeHTML"></p>
+        <p v-once> {{noidung}}-{{ showPost() }}</p>
+        <a v-bind:href="link">My website</a>
+        <h1>Bam nut de tang gia tri</h1><br>
+        <button v-on:click="tangGiaTri">Tang</button>
+        <br>
+        <button v-on:click="dem++">Dem</button>
+        <p>Gia tri: {{dem}}</p>
+        <p>Gia tri: {{dem>20?'ban da vuot muc gioi han':'ban van nam trong gio han cho phep'}}</p>
+        <p>Toa do cua chuot : {{ x }} / {{y}}</p>
+        <span v-on:mouseover.stop=""> Dung su kien</span>
+    </div>
+    <div>
+        <!--<input type="text" @keyup.enter.space="banPhim">-->
+    </div>
+    <input type="text" v-model="name">
+    <p>{{ name }}</p>
+
+    <p>Gia tri A: {{ tanga }} </p>
+    <p>Gia tri B: {{ tangb }} </p>
+    <p>Gia tri A: {{ tangaf() }} </p>
+    <p>Gia tri B: {{ tangbf() }} </p>
+    <button v-on:click="a++">Tang A</button>
+    <button v-on:click="b++">Tang B</button>
+
+    <p>{{ diem }}</p>
+    <button @click="changeLink">Click to change link</button>
+    <a v-bind:href="linkVal">Link</a><br>
+    <div class="vuong" @click="changeColor?quanLyXanhCay=!quanLyXanhCay:quanLyDo= !quanLyDo" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
+    <div class="vuong" @click="changeColor?quanLyXanhCay=!quanLyXanhCay:quanLyDo= !quanLyDo" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
+    <div class="vuong" @click="quanLyXanhCay= !quanLyXanhCay" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
+    <div class="vuong" @click="changeColor?quanLyXanhCay=!quanLyXanhCay:quanLyDo= !quanLyDo" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
+    <hr>
+    <input type="text">
+</div>
+
+<script>
+    //tat ca du lieu truyen qua html deu truyen duoi dang du lieu tho text
+    //computed thuc hien nhu mot function nhung no chi duoc coi laf mot property
+    //computed va watch thuong di kem voi nhau
+    //watch theo doi su thay doi cua bien de thuc hien mot hanh dong nao do
+    var app = new Vue({
+        el: '#app',
+        data: {
+            noidung: 'Day la noi dung bat dau',
+            link: 'https://vanhocpham.blogspot.com/',
+            tilte: 'adsfaadf',
+            body: 'adadfsda',
+            testCodeHTML: '<a href="">Get password</a>',
+            dem: 0,
+            x: 0,
+            y: 0,
+            name: 'hoc_anms',
+            a: 0,
+            b: 0,
+            diem: 'Ban A duoc 9 diem mon Toan',
+            linkVal: 'https://www.google.com',
+            quanLyDo: false,
+            quanLyXanhDuong: false,
+            quanLyXanhCay: false,
+            color:'xanhcay',
+
+        },
+        watch: {
+            diem: function (newValue) {
+                alert('haha watch day!')
+            }
+        },
+        computed: {
+            //Phan biet click giua cac o vs computed, neu khong phai o 3 thi chuyen het sang mau do,con click vao o 3 chuyen sang mau xanh
+            changeColor: function(){
+              if(this.quanLyXanhCay===true){
+                  return true;
+              }  else
+                  return false;
+            },
+            tanga: function () {
+                console.log("computed");
+                console.log("Goi function a");
+                return this.a;
+            },
+            tangb: function () {
+                console.log("computed");
+                console.log("Goi function b");
+                return this.b;
+            },
+            divClasses:function (){
+                return {
+                    do: this.quanLyDo,
+                    xanhduong: ! this.quanLyDo,
+                }
+            }
+        },
+        methods: {
+            sayGoodbye: function () {
+                document.write('Say Goodbye')
+            },
+            showPost: function () {
+                this.noidung = "Noi dung duoc cap nhat";
+                return this.noidung;
+            },
+            tangGiaTri: function () {
+                this.dem++;
+                return this.dem;
+            },
+            tinhToaDo: function (event) {
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            // dungChuot: function (event) {
+            //    event.stopPropagation();
+            // },
+            banPhim: function () {
+                alert("hello babie ah!");
+            },
+            tangaf: function () {
+                console.log("method");
+                console.log("Goi function a");
+                return this.a;
+            },
+            tangbf: function () {
+                console.log("method");
+
+                console.log("Goi function b");
+                return this.b;
+            },
+            changeLink: function () {
+                this.linkVal = 'https://facebook.com';
+            }
+
+        }
+    });
+
+    app.diem='fhasdfghgahfgaghfgha';
+</script>
+</body>
+</html>
