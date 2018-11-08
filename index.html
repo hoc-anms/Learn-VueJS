@@ -61,8 +61,20 @@
     <div class="vuong" @click="changeColor?quanLyXanhCay=!quanLyXanhCay:quanLyDo= !quanLyDo" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
     <div class="vuong" @click="quanLyXanhCay= !quanLyXanhCay" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
     <div class="vuong" @click="changeColor?quanLyXanhCay=!quanLyXanhCay:quanLyDo= !quanLyDo" :class="changeColor?{xanhcay:quanLyXanhCay}:{do:quanLyDo}"></div>
+
+
+
+    <div class="vuong" :class="[colorTest, {do:quanLyDo}]" ></div>
     <hr>
-    <input type="text">
+    <input type="text" v-model="colorTest">
+    <hr>
+    <div class="vuong"  :style="{backgroundColor:color}"></div>
+    <div class="vuong" :style="[customStyles,{height:width+'px'}]"></div>
+    <div class="vuong":style="customStyles"></div>
+    <hr>
+    <input type="text" v-model="color">
+    <input type="text" v-model="width">
+    <input type="text" v-model="height">
 </div>
 
 <script>
@@ -89,7 +101,10 @@
             quanLyDo: false,
             quanLyXanhDuong: false,
             quanLyXanhCay: false,
-            color:'xanhcay',
+            colorTest:'xanhcay',
+            color: 'gray',
+            width: 100,
+
 
         },
         watch: {
@@ -119,6 +134,13 @@
                 return {
                     do: this.quanLyDo,
                     xanhduong: ! this.quanLyDo,
+                }
+            },
+            customStyles:function () {
+                return{
+                    backgroundColor:this.color,
+                    width: this.width +'px',
+
                 }
             }
         },
