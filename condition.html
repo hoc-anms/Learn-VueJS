@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Condition VueJs</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <p>Are u dev?</p>
+    <p v-if="xacdinh">Yes, I am<span>asdasd</span></p>
+    <p v-else>No, I'm doctor</p>
+    <button @click="xacdinh=!xacdinh">Change condition</button>
+
+    <template v-if="xacdinh">
+        <div>Menu1</div>
+        <div>Menu1</div>
+        <div>Menu1</div>
+        <div>Menu1</div>
+        <div>Menu1</div>
+    </template>
+
+    <p v-show="xacdinh">Test show element</p>
+    <ul>
+        <!--khi duyet vong lap, ban co duoc 4 phan tu menu thi vuejs se sinh ra 5 cai unique key assign trung vi tri vs i-->
+        <!--unique key      i-->
+        <!--sdfajksdfhj     0-->
+        <!--dsfnsdafsdj     1-->
+        <!--...             ...-->
+        <!--adsfafsdfsd     4-->
+
+        <li v-for="(menu,i) in menus" :key="menu">{{menu}} voi index la {{i}}</li>
+    </ul>
+
+    <button @click="menus.push('Test')">Add New Item</button>
+    <!--//v-for cung su dung duoc alternative  ,-->
+    <!--<template v-for="(menu,index) in menus">-->
+        <!--<h3>{{menu}}</h3>-->
+        <!--<p>{{index}}</p>-->
+    <!--</template>-->
+
+
+      <!--muon loop vao doi tuong can su dung 2 vong f-->
+
+
+    <ul>
+       <li v-for="student in students">
+           <div v-for="(value, key,index ) in student">{{key}}:{{value}} STT: {{index}}</div>
+       </li>
+
+    </ul>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            xacdinh: true,
+            menus:['Home','About','Blog', 'Contact', 'FAQ'],
+            students:[
+                {name:'anms', age:22, class:'electronic'},
+                {name:'anms1', age:23, class:'electronic1'},
+                {name:'anms2', age:24, class:'electronic2'},
+            ],
+        },
+        watch:{
+
+        },
+        computed:{
+
+        },
+        methods:{
+
+        },
+
+    })
+</script>
+</body>
+</html>
