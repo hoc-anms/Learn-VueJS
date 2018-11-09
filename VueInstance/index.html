@@ -21,18 +21,27 @@
 <div id="app2">
     <h1>{{title}}</h1>
     <button @click="onChange">Change Something In Vue JS Instance</button>
+    <hello></hello>
+</div>
+
+<div id="apphello">
+    <h1>{{title}}</h1>
+    <button @click="title='channge event click!'">Update event</button>
+    <button @click="destroyEvent">Destroyerver Event</button>
 </div>
 
 
 <script>
+    Vue.component('hello',{
+       template:'<p>Hello Vietnam!</p>',
+    });
     var data = {
         title: 'The Vue JS Instance',
         showParagraph: false,
     }
     var vn = new Vue({
         el: '#app',
-        data: data
-        ,
+        data: data,
         methods: {
             show: function () {
                 this.showParagraph = true;
@@ -75,6 +84,44 @@
     vn.$refs.infoHeading.innerText = 'test using ref'
     console.log(vn);
     console.log(vn.$data.title);
+
+    new Vue({
+       el: '#apphello',
+       data:{
+         title:'VueJS Instance Lifecycle',
+       },
+        beforeCreated:function () {
+            console.log('beforeCreated!');
+        },
+        created:function () {
+            console.log('Created!');
+        },
+        beforeMounted:function () {
+            console.log('beforeMounted!');
+        },
+        mounted:function () {
+            console.log('mounted!');
+        },
+        beforeUpdated:function () {
+            console.log('beforeUpdated!');
+        },
+        updated:function () {
+            console.log('updated!');
+        },
+        beforeDestroyed:function () {
+            console.log('beforeDestroyed!');
+        },
+        destroyed:function () {
+            console.log('destroyed!')
+        },
+        methods:{
+           destroyEvent:function () {
+               this.$destroy();
+           }
+        }
+
+    });
+
 </script>
 </body>
 </html>
