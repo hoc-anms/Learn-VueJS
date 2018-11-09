@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Instance</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1 ref="infoHeading">{{title}}</h1>
+    <h1>After Computed: {{lowercaseTitle}}</h1>
+    <button @click="show" ref="infoButton">Show</button>
+    <p v-if="showParagraph">Paragraphs writing competitions are part of skill and knowledge enhancement program for the
+        students in the school.
+        Now-a-days, almost all the schools are following this regime of essay or paragraphs writing in the classroom in
+        order to enhance the student’s
+        learning of English as well as proper awareness about the events and activities in India.
+    </p>
+</div>
+
+<div id="app2">
+    <h1>{{title}}</h1>
+    <button @click="onChange">Change Something In Vue JS Instance</button>
+</div>
+
+
+<script>
+    var data = {
+        title: 'The Vue JS Instance',
+        showParagraph: false,
+    }
+    var vn = new Vue({
+        el: '#app',
+        data: data
+        ,
+        methods: {
+            show: function () {
+                this.showParagraph = true;
+                this.updateTitle('This Vue JS Instance (Updated)');
+                console.log(this.$refs);
+                this.$refs.infoButton.innerText = "show after using refs"
+            },
+            updateTitle: function (title) {
+                this.title = title;
+            }
+        },
+        computed: {
+            lowercaseTitle: function () {
+                return this.title.toLowerCase();
+            }
+        },
+        watch: {
+            title: function (value) {
+                alert('Title changed, new value:' + value);
+            }
+        },
+    });
+
+    var tl = new Vue({
+        el: '#app2',
+        data: {
+            title: 'The Second Vue JS Instance',
+        },
+        methods: {
+            onChange: function () {
+                vn.title = 'Change!';
+            }
+        }
+    });
+    // setTimeout(function () {
+    //     vn.title='change by timer by from outside'
+    // },3000)
+
+    vn.newProp = ' New Value!';
+    vn.$refs.infoHeading.innerText = 'test using ref'
+    console.log(vn);
+    console.log(vn.$data.title);
+</script>
+</body>
+</html>
